@@ -7,9 +7,18 @@ class Signin extends Component {
   handleFormSubmit({email, password}) {
     // Need to do something to log user in
     this.props.signinUser({email, password});
-
   }
 
+  renderAlert(){
+    if (this.props.errorMessage) {
+      return (
+        <div className="alert alert-danger">
+        <strong>Oops!</strong> {this.props.errorMessage}
+        </div>
+      );
+
+    }
+  }
 
   render(){
 
@@ -31,8 +40,10 @@ class Signin extends Component {
 
       <fieldset className=" form-group">
       <label>Password:</label>
-      <input {...password} className="form-control"/>
+      <input {...password} type="password" className="form-control"/>
       </fieldset>
+
+      {this.renderAlert()}
 
       <button action="submit" className="btn btn-primary">Sign-in</button>
 
@@ -40,6 +51,10 @@ class Signin extends Component {
 
     );
   }
+}
+
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error};
 }
 
 
@@ -50,9 +65,9 @@ class Signin extends Component {
 export default reduxForm({
   form: 'signin',
   fields: ['email', 'password']
-}, null, actions)(Signin);
+}, mapStateToProps, actions)(Signin);
 
-// null is mapstatetoprops
+
 
 // This hooks us up to the reduxForm helper
 // this.props.fields.email
