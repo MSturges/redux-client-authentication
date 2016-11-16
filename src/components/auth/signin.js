@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-
+import * as actions from '../../actions';
 
 class Signin extends Component {
 
   handleFormSubmit({email, password}) {
     // Need to do something to log user in
-    
+    this.props.signinUser({email, password});
 
   }
 
@@ -50,7 +50,9 @@ class Signin extends Component {
 export default reduxForm({
   form: 'signin',
   fields: ['email', 'password']
-})(Signin);
+}, null, actions)(Signin);
+
+// null is mapstatetoprops
 
 // This hooks us up to the reduxForm helper
 // this.props.fields.email
