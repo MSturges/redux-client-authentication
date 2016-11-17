@@ -65,10 +65,34 @@ export function authError(error) {
 
 
 export function signoutUser(){
-
   localStorage.removeItem('token');
-
   return {
     type: UNAUTH_USER,
+  }
+}
+
+// export function fetchMessage() {
+//   return function(dispatch) {
+//     axios.get(`${API_URL}`)
+//     .then(response => {
+//       console.log(response);
+//     })
+//
+//   }
+// }
+
+export function fetchMessage() {
+  return function(dispatch) {
+    axios({
+      url: `${API_URL}`,
+      method: 'get',
+      headers: { authorization: localStorage.getItem('token')}
+    })
+    .then(response => {
+      console.log('success!', response);
+    })
+    .catch(error => {
+      console.log('Error', error.response);
+    });
   }
 }
