@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 class Header extends Component {
-
   renderLinks(){
     if (this.props.authentcated) {
       // show signout
-      return [
-        <li className="nav-item">
-          <Link to="/signout" className="nav-link">Sign Out</Link>
+      return ( <li className="nav-item">
+          <Link to="/signout" className="nav-link" key={3}>Sign Out</Link>
         </li>
-      ];
-
+      )
     } else{
       // signin or signout
       return [

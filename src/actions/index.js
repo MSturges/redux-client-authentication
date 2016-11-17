@@ -2,7 +2,7 @@ import axios from 'axios'
 // communicate information about the url to Router
 // Also use it to make changes to the url
 import { browserHistory } from 'react-router';
-import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from './types';
+import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE } from './types';
 
 
 const API_URL = 'http://localhost:3090';
@@ -71,15 +71,6 @@ export function signoutUser(){
   }
 }
 
-// export function fetchMessage() {
-//   return function(dispatch) {
-//     axios.get(`${API_URL}`)
-//     .then(response => {
-//       console.log(response);
-//     })
-//
-//   }
-// }
 
 export function fetchMessage() {
   return function(dispatch) {
@@ -89,7 +80,10 @@ export function fetchMessage() {
       headers: { authorization: localStorage.getItem('token')}
     })
     .then(response => {
-      console.log('success!', response);
+      dispatch({
+        type: FETCH_MESSAGE,
+        payload: response.data.message
+      });
     })
     .catch(error => {
       console.log('Error', error.response);
